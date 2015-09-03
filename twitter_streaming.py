@@ -2,6 +2,13 @@
 from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
+import MySQLdb
+import time
+import json
+
+conn = MySQLdb.connect("localhost","root","cookies","root$tutorial")
+
+c = conn.cursor()
 
 #Variables that contains the user credentials to access Twitter API 
 access_token = "21627027-w4cJ0ugNNFIXzyt3YOj3In2YumXpk28a4K9RszLte"
@@ -14,7 +21,18 @@ consumer_secret = "y2dtTnAUU0WzPa8YjXIRAW1pVwr11NIY1EqZERb25lXqP3KmjW"
 class StdOutListener(StreamListener):
 
     def on_data(self, data):
-        print data
+
+        all_data = json.loads(data)
+        tweet = all_data["text"]
+        username = all_data["user"]["screen_name"]
+
+        c.execute("INSERT INTO taula (time, username, tweet) VALUES (%s,%s,%s)",
+            (time.time(), username, tweet))
+
+        conn.commit()
+
+        print((username,tweet))
+
         return True
 
     def on_error(self, status):
