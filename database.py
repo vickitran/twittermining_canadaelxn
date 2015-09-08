@@ -35,9 +35,11 @@ def insertRow(user, tweet, time, freqNDP, freqCons, freqLib):
 
 	return True
 
-# produces sum of specified party
+# produces sum of specified party: ndp, conservative, liberal
 def getSum(party):
-	c.execute("SELECT SUM(%s) FROM tables", [party])
-	#result = c.fetchone()
-	#print result
-	return True
+	stmt = "SELECT SUM({0}) FROM tables".format(party) #assumes column name is trusted input
+	c.execute(stmt)
+	#c.execute("SELECT SUM(%(party)s) FROM tables", [party])
+	result = c.fetchone() #gets the row of the produced sum table
+	#return value within the cell
+	return result[0]
