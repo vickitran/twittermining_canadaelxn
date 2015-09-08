@@ -1,29 +1,43 @@
 import MySQLdb
+import sys
 
-# connect to database    server       MySQL username	MySQL pass  Database name.
-conn = MySQLdb.connect("localhost","root","cookies","root$tutorial")
+#mysql.server start
+#mysql -u root -p
+#CREATE DATABASE dbname;
+#USE dbname;
+#CREATE TABLE tables (Username VARCHAR(20), Tweet VARCHAR(140), Time INT(13), NDP INT(13), Conservative INT(13), Liberal INT(13)); 
+
+# connect to database (server, MySQL username, MySQL pass, Database name)
+try:
+	conn = MySQLdb.connect("localhost","root","cookies","root$tutorial")
+except Exception as e:
+	sys.ext('We cant get into the database')
 
 # cursor used to execute queries
 c = conn.cursor()
 
-#This is a basic listener that just prints received tweets to stdout.
-class StdOutListener(StreamListener):
+'''
+try:
+	c.execute("CREATE TABLE  (username VARCHAR(20), tweet VARCHAR(140), time INT(13), ndp INT(13), conservative INT(13), liberal INT(13))")
+	conn.commit()
+except Exception as e:
+	sys.ext('Database already exists')
+'''
 
-    def on_data(self, data):
+# insert a row into table
+def insertRow(user, tweet, time, freqNDP, freqCons, freqLib):
+	# execute specified query: 
+	c.execute("INSERT INTO tables (username, tweet, time, ndp, conservative, liberal) VALUES (%s,%s,%s,%s,%s,%s)",
+            (user, tweet, time, freqNDP, freqCons, freqLib))
 
-        all_data = json.loads(data)
-        tweet = all_data["text"]
-        username = all_data["user"]["screen_name"]
+    # commit changes to database
+	conn.commit()
 
-        # execute specified query: 
-        c.execute("INSERT INTO taula (time, username, tweet) VALUES (%s,%s,%s)",
-            (time.time(), username, tweet))
+	return True
 
-        conn.commit()
-
-        print((username,tweet))
-
-        return True
-
-    def on_error(self, status):
-        print status
+# produces sum of specified party
+def getSum(party):
+	c.execute("SELECT SUM(%s) FROM tables", [party])
+	#result = c.fetchone()
+	#print result
+	return True
