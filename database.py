@@ -24,7 +24,7 @@ except Exception as e:
 	sys.ext('Database already exists')
 '''
 
-# insert a row into table
+# insert a row into table, parties should only have value of 0 or 1
 def insertRow(user, tweet, time, freqNDP, freqCons, freqLib):
 	# execute specified query: 
 	c.execute("INSERT INTO tables (username, tweet, time, ndp, conservative, liberal) VALUES (%s,%s,%s,%s,%s,%s)",
@@ -43,3 +43,12 @@ def getSum(party):
 	result = c.fetchone() #gets the row of the produced sum table
 	#return value within the cell
 	return result[0]
+
+#determine percentage of tweets relevent to specific party: ndp, conservative, liberal
+def getPercent(party):
+	c.execute("SELECT COUNT(*) FROM tables")
+	result = c.fetchone() #gets the row of the produced sum table
+	percent = getSum(party)/result[0] * 100
+	#return percentage
+	print "{}{}".format(percent, "%")
+	return percent
