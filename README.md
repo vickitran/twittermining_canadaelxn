@@ -1,7 +1,7 @@
 # twittermining_canadaelxn
 A simple python app that text mines twitter data related to the Canada Federal Election 2015. It determines the frequency that each significant party in Canada (NDP, Liberal, Conservative) is mentioned in a select batch of tweets and visualises it through a plot.
 
-To further analyse the data, it was assumed that a positive tweet for a party correlates to the user voting for this party. Only tweets in which the confidence of the classifier was above 80% was taken into consideration (which correlates to human sentiment). 
+To further analyse the data, it was assumed that a positive tweet for a party correlates to the user voting for this party. Only tweets in which the confidence of the classifier was above 80% was taken into consideration (which correlates to human sentiment). This produced a dynamic plot of the sentiment of streaming tweets.
 
 # To Use
 Run main.py to create plot of party frequencies in tweets
