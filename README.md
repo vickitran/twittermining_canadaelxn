@@ -10,6 +10,8 @@ To look at current streaming sentiment, enter into your python environment:
 python streamSentiment.py &
 python plotSentiment.py &
 
+Note you must have your own twitter credentials to access API. Please see https://dev.twitter.com/oauth. 
+
 # Conclusion
 In comparision to the official CBC polls, the sentiment plot produces a general pattern that loosely aligns with the polls. The application can determine the current sentiment of users, especially during active times such as a debate or political campaigning event. As a result, Twitter can be used as a valuable resource to determine the current opinions of Canadians on the different parties and the effects on the outcome of the upcoming election.
 
